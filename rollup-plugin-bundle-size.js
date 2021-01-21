@@ -4,7 +4,11 @@ export function bundleSize() {
     generateBundle(_, bundle) {
       const files = Object.keys(bundle);
       for (const file of files) {
-        const fileSize = Buffer.byteLength(bundle[file].code, 'utf8');
+        const code = bundle[file].code;
+        if (!code) {
+          continue;
+        }
+        const fileSize = Buffer.byteLength(code, 'utf8');
         console.log(`${file} ≈ ${prettyPrintFileSize(fileSize)}`);
       }
     },
@@ -14,5 +18,5 @@ export function bundleSize() {
 function prettyPrintFileSize(size) {
   const i = size ? Math.floor(Math.log(size) / Math.log(1024)) : 0;
   const units = ['B', 'kB', 'MB', 'GB', 'TB'];
-  return `${+(size / Math.pow(1024, i).toFixed(2))} ${units[i]}`;
+  return `${+(size / Math.pow(1024, i)).toFixed(2)} ${units[i]}`;
 }

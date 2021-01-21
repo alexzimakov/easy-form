@@ -1,8 +1,11 @@
+import commonjs from '@rollup/plugin-commonjs';
 import dev from 'rollup-plugin-dev';
+import typescript from '@rollup/plugin-typescript';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 import { preferences } from './rollup.config';
 
 export default function devConfig(args) {
-  const plugins = [...preferences.plugins];
+  const plugins = [typescript({ sourceMap: true }), nodeResolve(), commonjs()];
 
   if (args.watch) {
     plugins.push(
@@ -10,6 +13,9 @@ export default function devConfig(args) {
         dirs: ['./demo'],
         host: 'localhost',
         port: 1234,
+        extend(app, { router, send }) {
+          app.use(router.get('/src/*', (ctx) => send(ctx, ctx.path)));
+        },
       })
     );
   }
@@ -19,6 +25,7 @@ export default function devConfig(args) {
     output: {
       ...preferences.output,
       file: './demo/js/easy-form.js',
+      sourcemap: true,
     },
     plugins,
   };

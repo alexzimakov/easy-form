@@ -1,15 +1,16 @@
+import commonjs from '@rollup/plugin-commonjs';
+import gzip from 'rollup-plugin-gzip';
 import typescript from '@rollup/plugin-typescript';
+import { bundleSize } from './rollup-plugin-bundle-size';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 import { terser } from 'rollup-plugin-terser';
-import { bundleSize } from './rollup-plugin-budnle-size';
 
 export const preferences = {
   input: './src/index.ts',
   output: {
     format: 'iife',
-    name: 'easyForm',
-    sourcemap: true,
+    name: 'EasyForm',
   },
-  plugins: [typescript()],
 };
 
 export default {
@@ -23,8 +24,8 @@ export default {
     {
       ...preferences.output,
       file: './dist/easy-form.min.js',
-      plugins: [terser()],
+      plugins: [terser(), gzip()],
     },
   ],
-  plugins: [...preferences.plugins, bundleSize()],
+  plugins: [typescript(), nodeResolve(), commonjs(), bundleSize()],
 };
