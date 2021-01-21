@@ -1966,4 +1966,3 @@ var EasyForm = (function () {
     return EasyForm;
 
 }());
-//# sourceMappingURL=easy-form.js.map

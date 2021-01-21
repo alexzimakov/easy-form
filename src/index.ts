@@ -1,3 +1,1 @@
-export function render(root: Element): void {
-  root.innerHTML = 'Easy Form';
-}
+export { EasyForm as default } from './easy-form';
