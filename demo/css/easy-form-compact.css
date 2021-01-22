@@ -3,7 +3,6 @@
 }
 
 .efc-container {
-  position: relative;
 }
 
 .efc-container__title {
@@ -75,6 +74,7 @@
 }
 
 .efc-field {
+  position: relative;
   color: #1f2937;
 }
 
@@ -147,6 +147,37 @@
 .efc-textarea {
   min-height: 4.75rem;
   resize: vertical;
+}
+
+.efc-field__label_floated {
+  position: absolute;
+  padding: 0 0.25rem;
+  top: 0.6875rem;
+  left: 0.5rem;
+  transition: 150ms ease-in-out;
+  transition-property: transform, color, background-color;
+  transform-origin: left center;
+  color: #6b7280;
+  border-radius: 0.125rem;
+  line-height: 1rem;
+  will-change: transform;
+}
+
+.efc-field__label_floated + .efc-field__input::placeholder {
+  opacity: 0;
+  transition: opacity 150ms ease-in-out;
+}
+
+.efc-field_no-empty .efc-field__label,
+.efc-field_focused .efc-field__label {
+  transform: translate(0, -1.1875rem) scale(0.85);
+  color: #111827;
+  background-color: #fff;
+}
+
+.efc-field_no-empty .efc-field__input::placeholder,
+.efc-field_focused .efc-field__input::placeholder {
+  opacity: 1;
 }
 
 .efc-select {

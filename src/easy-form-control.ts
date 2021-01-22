@@ -127,7 +127,8 @@ export class EasyFormControl implements FormControl {
   }
 
   private _createField(): HTMLDivElement {
-    const { type, label } = this._schema;
+    const { type, label, value } = this._schema;
+    const canShowFloatedLabel = type !== 'select';
 
     let $input: Input;
     switch (type) {
@@ -150,9 +151,12 @@ export class EasyFormControl implements FormControl {
 
     if (label) {
       const $label = document.createElement('label');
-      $label.classList.add(CLASS_NAMES.fieldLabel);
-      $label.setAttribute('for', $input.id);
       appendContentToElement($label, label);
+      $label.setAttribute('for', $input.id);
+      $label.classList.add(CLASS_NAMES.fieldLabel);
+      if (canShowFloatedLabel) {
+        $label.classList.add(CLASS_NAMES.fieldLabelFloated);
+      }
       $field.append($label);
     }
 
@@ -160,6 +164,26 @@ export class EasyFormControl implements FormControl {
       $field.prepend($input);
     } else {
       $field.append($input);
+    }
+
+    if (canShowFloatedLabel) {
+      if (value) {
+        $field.classList.add(CLASS_NAMES.fieldNoEmpty);
+      }
+
+      $input.addEventListener('input', () => {
+        if ($input.value) {
+          $field.classList.add(CLASS_NAMES.fieldNoEmpty);
+        } else {
+          $field.classList.remove(CLASS_NAMES.fieldNoEmpty);
+        }
+      });
+      $input.addEventListener('focus', () => {
+        $field.classList.add(CLASS_NAMES.fieldFocused);
+      });
+      $input.addEventListener('blur', () => {
+        $field.classList.remove(CLASS_NAMES.fieldFocused);
+      });
     }
 
     return $field;

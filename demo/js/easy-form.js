@@ -25,10 +25,13 @@ var EasyForm = (function () {
         formControlHelpText: PREFIX + "-form-control__help-text",
         formControlError: PREFIX + "-form-control__error",
         field: PREFIX + "-field",
+        fieldFocused: PREFIX + "-field_focused",
+        fieldNoEmpty: PREFIX + "-field_no-empty",
         fieldTypeModifier: function (type) {
             return PREFIX + "-field_type_" + type;
         },
         fieldLabel: PREFIX + "-field__label",
+        fieldLabelFloated: PREFIX + "-field__label_floated",
         fieldInput: PREFIX + "-field__input",
         input: PREFIX + "-input",
         inputTypeModifier: function (type) {
@@ -1502,7 +1505,8 @@ var EasyForm = (function () {
             return $control;
         };
         EasyFormControl.prototype._createField = function () {
-            var _a = this._schema, type = _a.type, label = _a.label;
+            var _a = this._schema, type = _a.type, label = _a.label, value = _a.value;
+            var canShowFloatedLabel = type !== 'select';
             var $input;
             switch (type) {
                 case 'select':
@@ -1514,13 +1518,17 @@ var EasyForm = (function () {
                 default:
                     $input = this._createInput();
             }
+            $input.classList.add(CLASS_NAMES.fieldInput);
             var $field = document.createElement('div');
             $field.classList.add(CLASS_NAMES.field, CLASS_NAMES.fieldTypeModifier(type));
             if (label) {
                 var $label = document.createElement('label');
-                $label.classList.add(CLASS_NAMES.fieldLabel);
-                $label.setAttribute('for', $input.id);
                 appendContentToElement($label, label);
+                $label.setAttribute('for', $input.id);
+                $label.classList.add(CLASS_NAMES.fieldLabel);
+                if (canShowFloatedLabel) {
+                    $label.classList.add(CLASS_NAMES.fieldLabelFloated);
+                }
                 $field.append($label);
             }
             if (type === 'checkbox') {
@@ -1528,6 +1536,25 @@ var EasyForm = (function () {
             }
             else {
                 $field.append($input);
+            }
+            if (canShowFloatedLabel) {
+                if (value) {
+                    $field.classList.add(CLASS_NAMES.fieldNoEmpty);
+                }
+                $input.addEventListener('input', function () {
+                    if ($input.value) {
+                        $field.classList.add(CLASS_NAMES.fieldNoEmpty);
+                    }
+                    else {
+                        $field.classList.remove(CLASS_NAMES.fieldNoEmpty);
+                    }
+                });
+                $input.addEventListener('focus', function () {
+                    $field.classList.add(CLASS_NAMES.fieldFocused);
+                });
+                $input.addEventListener('blur', function () {
+                    $field.classList.remove(CLASS_NAMES.fieldFocused);
+                });
             }
             return $field;
         };
@@ -1840,7 +1867,8 @@ var EasyForm = (function () {
             configurable: true
         });
         EasyForm.prototype.submit = function () {
-            return;
+            var _a;
+            (_a = this.$form) === null || _a === void 0 ? void 0 : _a.submit();
         };
         EasyForm.prototype.validateField = function (fieldName) {
             var values = this._values;

@@ -29,6 +29,7 @@
           type: 'tel',
           name: 'phone',
           label: 'Phone number',
+          inputAttrs: { placeholder: 'e.g. +14841112233' },
           validators: [Validators.isMobilePhone('Invalid phone number')],
         },
         {

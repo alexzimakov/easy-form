@@ -23,10 +23,13 @@ export const CLASS_NAMES = {
   formControlHelpText: `${PREFIX}-form-control__help-text`,
   formControlError: `${PREFIX}-form-control__error`,
   field: `${PREFIX}-field`,
+  fieldFocused: `${PREFIX}-field_focused`,
+  fieldNoEmpty: `${PREFIX}-field_no-empty`,
   fieldTypeModifier: (type: string): string => {
     return `${PREFIX}-field_type_${type}`;
   },
   fieldLabel: `${PREFIX}-field__label`,
+  fieldLabelFloated: `${PREFIX}-field__label_floated`,
   fieldInput: `${PREFIX}-field__input`,
   input: `${PREFIX}-input`,
   inputTypeModifier: (type: string): string => {
