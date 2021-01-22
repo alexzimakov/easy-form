@@ -10,7 +10,7 @@ export default function devConfig(args) {
   if (args.watch) {
     plugins.push(
       dev({
-        dirs: ['./demo'],
+        dirs: ['./docs'],
         host: 'localhost',
         port: 1234,
         extend(app, { router, send }) {
@@ -24,7 +24,7 @@ export default function devConfig(args) {
     input: preferences.input,
     output: {
       ...preferences.output,
-      file: './demo/js/easy-form.js',
+      file: './docs/js/easy-form.js',
       sourcemap: true,
     },
     plugins,

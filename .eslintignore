@@ -1,6 +1,6 @@
 dist
 coverage
-demo/js/easy-form.js
+docs/js/easy-form.js
 rollup.config.js
 rollup.config.dev.js
 rollup-plugin-bundle-size.js

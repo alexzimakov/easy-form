@@ -5,13 +5,13 @@
   "main": "dist/easy-form.js",
   "scripts": {
     "lint": "eslint src/**/*.ts",
-    "format": "prettier --write src demo",
+    "format": "prettier --write src docs",
     "test": "jest",
     "test:coverage": "npm run test -- --coverage --no-cache",
     "start": "rollup --config rollup.config.dev.js --watch",
-    "build:demo": "rollup --config rollup.config.dev.js",
+    "build:docs": "rollup --config rollup.config.dev.js",
     "build:dist": "rimraf dist && rollup --config",
-    "build": "npm run build:demo && npm run build:dist",
+    "build": "npm run build:docs && npm run build:dist",
     "prepublishOnly": "npm run build"
   },
   "repository": {
